@@ -74,14 +74,11 @@ const modalOverlay = document.querySelector('.lightbox__overlay');
 let url = '';
 
 
-
-
-//1. Создание и рендер разметки по массиву данных `galleryItems` из `app.js` и
-//предоставленному шаблону.
 const gallaryListMarckup = createGallaryListMarckup(galleryItems);
 gallaryList.insertAdjacentHTML('afterbegin', gallaryListMarckup);
+
 function createGallaryListMarckup(galleryItems) {
-  return galleryItems
+    return galleryItems
     .map(({preview, original, description}) => {
   return `
   <li class="gallery__item">
@@ -101,41 +98,41 @@ function createGallaryListMarckup(galleryItems) {
 .join('');
 } 
 
-//2. Реализация делегирования на галерее `ul.js-gallery` 
+
 gallaryList.addEventListener('cklick', onOpenModal);
 
 function onOpenModal(e) {
-  
   const target = e.target;
-//Получение `url` большого изображения.
   url = target.dataset.source
-
-//3. Открытие модального окна по клику на элементе галереи.
   modalCard.classList.add('is-open');
-  
-//4. Подмена значения атрибута `src` элемента `img.lightbox__image`.
-modalImg.setAttribute('src', url)
+  modalImg.setAttribute('src', url);
+  window.addEventListener('keypress', onEscClose);
 }
 
-//5. Закрытие модального окна по клику на кнопку`button[data-action="close-lightbox"]`.
 modalButton.addEventListener('click', onCloseModal);
-
-// Закрытие модального окна по клику на div.lightbox__overlay.
-modalOverlay.addEventListener('click', onCloseModal);
-
- // Закрытие модального окна по нажатию клавиши ESC.
- 
-
 
 function onCloseModal(){
   modalCard.classlist.remove('is-open');
-
-//6. Очистка значения атрибута `src` элемента `img.lightbox__image`.
-  modalImg.setAttribute('src')
+  modalImg.setAttribute('src', '')
+  window.removeEventListener('keypress', onEscClose);
 };
 
+modalOverlay.addEventListener('click', onOverlayClose);
 
-    
+function onOverlayClose() {
+  if (e.currentTarget === e.target) {
+  onCloseModal();  
+  }
+  
+}
    
+function onEscClose(e) {
+  if (e.code === 'Escape') {
+    onCloseModal()
+  }
+  console.log(e)
+  
+}
+
     // Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
 
