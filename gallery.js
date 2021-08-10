@@ -70,6 +70,7 @@ const gallaryList = document.querySelector('ul.gallery.js-gallery');
 const modalCard = document.querySelector('.js-lightbox'); 
 const modalImg = document.querySelector('.lightbox__image');
 const modalButton = document.querySelector('[data-action="close-lightbox"]');
+// console.log(modalButton);
 const modalOverlay = document.querySelector('.lightbox__overlay');
 let url = '';
 
@@ -95,44 +96,88 @@ function createGallaryListMarckup(galleryItems) {
   </a>
 </li>
 `;})
-.join('');
+    .join('');
+  
 } 
+// console.log(gallaryList);
 
-
-gallaryList.addEventListener('cklick', onOpenModal);
+gallaryList.addEventListener('click', onOpenModal);
 
 function onOpenModal(e) {
+  // console.log(e);
+  // console.dir('image:', e.target);
+  // console.dir('eventListener:', e.currentTarget);
+  e.preventDefault();
+
   const target = e.target;
   url = target.dataset.source
-  modalCard.classList.add('is-open');
   modalImg.setAttribute('src', url);
-  window.addEventListener('keypress', onEscClose);
+  modalCard.classList.add('is-open');
+
+  window.addEventListener('keydown', onEscClose);  
 }
 
 modalButton.addEventListener('click', onCloseModal);
 
-function onCloseModal(){
-  modalCard.classlist.remove('is-open');
-  modalImg.setAttribute('src', '')
-  window.removeEventListener('keypress', onEscClose);
+function onCloseModal() {
+    
+  modalImg.setAttribute('src', '');
+
+  if (modalCard.classList.contains('is-open')) {
+    modalCard.classList.remove('is-open');
+}
+  
+  window.removeEventListener('keydown', onEscClose);
 };
+
+function onEscClose(e) {
+  console.log(e);
+  
+  if (e.keyCode === 27) {
+    onCloseModal();
+  }
+}
 
 modalOverlay.addEventListener('click', onOverlayClose);
 
-function onOverlayClose() {
+function onOverlayClose(e) {
   if (e.currentTarget === e.target) {
   onCloseModal();  
   }
-  
+  console.log(e)
 }
    
-function onEscClose(e) {
-  if (e.code === 'Escape') {
-    onCloseModal()
+const keyPressed = function (e) {
+  const key = e.code;
+  switch (key) {
+    case 'ArrowLeft':
+      images.forEach((elem, index, arr) => {
+        if (elem.original === url) {
+          if (index === 0) {
+            index = arr.length;
+          }
+          url = arr[index - 1].original;
+          return
+        }
+      });
+      modalImg.setAttribute('src', url);
+      break;
+    case 'ArrowRight':
+      let currentIndex;
+      images.forEach((elem, index, arr) => {
+        if (elem.original === url) {
+          currentIndex = index;
+          return
+        }
+      })
+      currentIndex = currentIndex === images.length - 1 ? currentIndex = -1 : currentIndex;
+      url = images[currentIndex + 1].original;
+      modalImg.setAttribute('src', url);
+      break;
+     
   }
-  console.log(e)
-  
 }
+
 
     // Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
 
