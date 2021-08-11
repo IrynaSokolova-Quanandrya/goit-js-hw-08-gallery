@@ -74,7 +74,6 @@ const modalButton = document.querySelector('[data-action="close-lightbox"]');
 const modalOverlay = document.querySelector('.lightbox__overlay');
 let url = '';
 
-
 const gallaryListMarckup = createGallaryListMarckup(galleryItems);
 gallaryList.insertAdjacentHTML('afterbegin', gallaryListMarckup);
 
@@ -99,14 +98,11 @@ function createGallaryListMarckup(galleryItems) {
     .join('');
   
 } 
-// console.log(gallaryList);
+
 
 gallaryList.addEventListener('click', onOpenModal);
 
 function onOpenModal(e) {
-  // console.log(e);
-  // console.dir('image:', e.target);
-  // console.dir('eventListener:', e.currentTarget);
   e.preventDefault();
 
   const target = e.target;
@@ -146,38 +142,72 @@ function onOverlayClose(e) {
   }
   console.log(e)
 }
-   
-const keyPressed = function (e) {
-  const key = e.code;
-  switch (key) {
-    case 'ArrowLeft':
-      images.forEach((elem, index, arr) => {
-        if (elem.original === url) {
-          if (index === 0) {
-            index = arr.length;
-          }
-          url = arr[index - 1].original;
-          return
-        }
-      });
-      modalImg.setAttribute('src', url);
-      break;
-    case 'ArrowRight':
-      let currentIndex;
-      images.forEach((elem, index, arr) => {
-        if (elem.original === url) {
-          currentIndex = index;
-          return
-        }
-      })
-      currentIndex = currentIndex === images.length - 1 ? currentIndex = -1 : currentIndex;
-      url = images[currentIndex + 1].original;
-      modalImg.setAttribute('src', url);
-      break;
+   // Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
+
+// function ArrowLeft(galleryItems) {
+//   galleryItems.forEach((elem, index, arr) => {
+//         if (elem.original === url) {
+//           if (index === 0) {
+//             index = arr.length;
+//           }
+//           url = arr[index - 1].original;
+//           return
+//         }
+//       });
+//       modalImg.setAttribute('src', url);
+// }
+		
+// function ArrowRight(galleryItems) {
+//    let currentIndex;
+//       galleryItems.forEach((elem, index, arr) => {
+//         if (elem.original === url) {
+//           currentIndex = index;
+//           return
+//         }
+//       })
+//   currentIndex = currentIndex === galleryItems.length - 1 ? currentIndex = -1 : currentIndex;
+//       url = galleryItems[currentIndex + 1].original;
+//       modalImg.setAttribute('src', url);
+
+// }   
+
+ 
+
+
+
+
+   // const keyPressed = function (e) {
+//   const key = e.code;
+//   switch (key) {
+//     case 'ArrowLeft':
+//       galleryItems.forEach((elem, index, arr) => {
+//         if (elem.original === url) {
+//           if (index === 0) {
+//             index = arr.length;
+//           }
+//           url = arr[index - 1].original;
+//           return
+//         }
+//       });
+//       modalImg.setAttribute('src', url);
+//       break;
+//     case 'ArrowRight':
+//       let currentIndex;
+//       galleryItems.forEach((elem, index, arr) => {
+//         if (elem.original === url) {
+//           currentIndex = index;
+//           return
+//         }
+//       })
+//       currentIndex = currentIndex === galleryItems.length - 1 ? currentIndex = -1 : currentIndex;
+//       url = galleryItems[currentIndex + 1].original;
+//       modalImg.setAttribute('src', url);
+//       break;
      
-  }
-}
+//   }
+//   console.log(e)
+// }
 
 
-    // Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
+    
 
