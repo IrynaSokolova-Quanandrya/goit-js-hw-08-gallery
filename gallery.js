@@ -110,7 +110,8 @@ function onOpenModal(e) {
   modalImg.setAttribute('src', url);
   modalCard.classList.add('is-open');
 
-  window.addEventListener('keydown', onEscClose);  
+  window.addEventListener('keydown', onEscClose);
+  window.addEventListener("keydown", keyPressed);
 }
 
 modalButton.addEventListener('click', onCloseModal);
@@ -124,6 +125,7 @@ function onCloseModal() {
 }
   
   window.removeEventListener('keydown', onEscClose);
+  window.removeEventListener("keydown", keyPressed);
 };
 
 function onEscClose(e) {
@@ -144,69 +146,38 @@ function onOverlayClose(e) {
 }
    // Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
 
-// function ArrowLeft(galleryItems) {
-//   galleryItems.forEach((elem, index, arr) => {
-//         if (elem.original === url) {
-//           if (index === 0) {
-//             index = arr.length;
-//           }
-//           url = arr[index - 1].original;
-//           return
-//         }
-//       });
-//       modalImg.setAttribute('src', url);
-// }
-		
-// function ArrowRight(galleryItems) {
-//    let currentIndex;
-//       galleryItems.forEach((elem, index, arr) => {
-//         if (elem.original === url) {
-//           currentIndex = index;
-//           return
-//         }
-//       })
-//   currentIndex = currentIndex === galleryItems.length - 1 ? currentIndex = -1 : currentIndex;
-//       url = galleryItems[currentIndex + 1].original;
-//       modalImg.setAttribute('src', url);
-
-// }   
-
- 
-
-
-
-
-   // const keyPressed = function (e) {
-//   const key = e.code;
-//   switch (key) {
-//     case 'ArrowLeft':
-//       galleryItems.forEach((elem, index, arr) => {
-//         if (elem.original === url) {
-//           if (index === 0) {
-//             index = arr.length;
-//           }
-//           url = arr[index - 1].original;
-//           return
-//         }
-//       });
-//       modalImg.setAttribute('src', url);
-//       break;
-//     case 'ArrowRight':
-//       let currentIndex;
-//       galleryItems.forEach((elem, index, arr) => {
-//         if (elem.original === url) {
-//           currentIndex = index;
-//           return
-//         }
-//       })
-//       currentIndex = currentIndex === galleryItems.length - 1 ? currentIndex = -1 : currentIndex;
-//       url = galleryItems[currentIndex + 1].original;
-//       modalImg.setAttribute('src', url);
-//       break;
-     
-//   }
-//   console.log(e)
-// }
+  function keyPressed(e) {
+  const key = e.code;
+    switch (key) {
+      case 'ArrowLeft':
+        galleryItems.forEach((elem, index, arr) => {
+          if (elem.original === url) {
+            if (index === 0) {
+              return;
+            }
+            url = arr[index - 1].original;
+            return;
+          }
+        });
+        modalImg.setAttribute('src', url);
+        break;
+    
+      case 'ArrowRight':
+        for (let i = 0; i < galleryItems.length; i += 1) {
+          const elem = galleryItems[i];
+          if (elem.original === url) {
+            if (i === galleryItems.length - 1) {
+              return;
+            }
+            url = galleryItems[i + 1].original;
+            break;
+          }
+        }
+        modalImg.setAttribute('src', url);
+        break;
+    }
+  
+}
 
 
     
