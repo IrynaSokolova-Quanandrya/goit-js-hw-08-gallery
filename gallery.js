@@ -104,11 +104,18 @@ gallaryList.addEventListener('click', onOpenModal);
 
 function onOpenModal(e) {
   e.preventDefault();
-
-  const target = e.target;
+ const target = e.target;
+  
+  if (target.nodeName !== 'IMG') {
+    return;
+  }
+ 
   url = target.dataset.source
   modalImg.setAttribute('src', url);
   modalCard.classList.add('is-open');
+
+  // modalImg.src = target.setAttribute('data-source');
+  // modalImg.alt = target.alt;
 
   window.addEventListener('keydown', onEscClose);
   window.addEventListener("keydown", keyPressed);
